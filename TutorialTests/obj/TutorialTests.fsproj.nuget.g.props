@@ -21,7 +21,9 @@
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <Pkgxunit_analyzers Condition=" '$(Pkgxunit_analyzers)' == '' ">/Users/hugomufraggi/.nuget/packages/xunit.analyzers/1.15.0</Pkgxunit_analyzers>
     <Pkgxunit Condition=" '$(Pkgxunit)' == '' ">/Users/hugomufraggi/.nuget/packages/xunit/2.9.0</Pkgxunit>
+    <PkgSystem_Text_Json Condition=" '$(PkgSystem_Text_Json)' == '' ">/Users/hugomufraggi/.nuget/packages/system.text.json/9.0.0-rc.1.24431.7</PkgSystem_Text_Json>
     <PkgFSharp_Core Condition=" '$(PkgFSharp_Core)' == '' ">/Users/hugomufraggi/.nuget/packages/fsharp.core/8.0.300</PkgFSharp_Core>
+    <PkgFSharp_SystemTextJson Condition=" '$(PkgFSharp_SystemTextJson)' == '' ">/Users/hugomufraggi/.nuget/packages/fsharp.systemtextjson/1.3.13</PkgFSharp_SystemTextJson>
     <PkgGiraffe Condition=" '$(PkgGiraffe)' == '' ">/Users/hugomufraggi/.nuget/packages/giraffe/7.0.2-alpha-001</PkgGiraffe>
     <PkgUnquote Condition=" '$(PkgUnquote)' == '' ">/Users/hugomufraggi/.nuget/packages/unquote/7.0.0</PkgUnquote>
     <PkgMicrosoft_NET_Test_Sdk Condition=" '$(PkgMicrosoft_NET_Test_Sdk)' == '' ">/Users/hugomufraggi/.nuget/packages/microsoft.net.test.sdk/17.11.1</PkgMicrosoft_NET_Test_Sdk>

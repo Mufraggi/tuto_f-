@@ -10,7 +10,7 @@ open System.Reflection
 [<assembly: System.Reflection.AssemblyCompanyAttribute("WebApplication2")>]
 [<assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")>]
 [<assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")>]
-[<assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")>]
+[<assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9a063f3431e617ae5a224b4ef336e474e07a29dd")>]
 [<assembly: System.Reflection.AssemblyProductAttribute("WebApplication2")>]
 [<assembly: System.Reflection.AssemblyTitleAttribute("WebApplication2")>]
 [<assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")>]

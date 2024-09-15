@@ -1,32 +1,49 @@
 module WebApplication2
-
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Hosting
 open Microsoft.Extensions.Hosting
 open Microsoft.Extensions.DependencyInjection
 open Giraffe
+open System.Text.Json.Serialization
 
-let webApp =
+open Giraffe
+open Domain
+
+let getListsForUserHandler (fetcher: ListFetcher) user =
+    let lists = fetcher user
+    let mapped = lists |> List.map Contract.fromDomain
+    let response: Contract.GetListsResponse = { lists = mapped |> Array.ofSeq }
+    json response
+    
+let webApp (fetcher : ListFetcher) =
     choose [
         route "/ping"   >=> text "pong"
-        route "/"       >=> htmlFile "/pages/index.html" ]
+        routef "/%s/lists" (getListsForUserHandler fetcher)
+    ]
+    
 
-let configureApp (app : IApplicationBuilder) =
-    // Add Giraffe to the ASP.NET Core pipeline
-    app.UseGiraffe webApp
+let configureApp fetcher (app : IApplicationBuilder) = app.UseGiraffe(webApp fetcher) 
 
-let configureServices (services : IServiceCollection) =
-    // Add Giraffe dependencies
-    services.AddGiraffe() |> ignore
-let configure (webHostBuilder: IWebHostBuilder) =
+let jsonOptions =
+    let options = Json.Serializer.DefaultOptions
+    options.Converters.Add(JsonFSharpConverter(JsonUnionEncoding.FSharpLuLike))
+    options
+
+let configureServices (services: IServiceCollection) =
+    services
+        .AddGiraffe()
+        .AddSingleton<Json.ISerializer>(Json.Serializer(jsonOptions))
+    |> ignore
+let configure fetcher (webHostBuilder: IWebHostBuilder) =
     webHostBuilder
-        .Configure(configureApp)
+        .Configure(configureApp fetcher)
         .ConfigureServices(configureServices)
 
 [<EntryPoint>]
 let main _ =
+    let fetcher = (fun _ -> [])
     Host.CreateDefaultBuilder()
-        .ConfigureWebHostDefaults(configure >> ignore)
+        .ConfigureWebHostDefaults(fetcher >> ignore)
         .Build()
         .Run()
     0
