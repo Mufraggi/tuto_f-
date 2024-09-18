@@ -13,3 +13,8 @@ type ToDoList = {
     percentageDone:decimal
 }
 type ListFetcher = string -> ToDoList list
+type CreateToDoListRequest = { Name: string; Description: string }
+
+type Creator = CreateToDoListRequest -> ToDoList
+
+

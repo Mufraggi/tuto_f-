@@ -1,32 +1,38 @@
-module Contract
+module Contact 
+type Status = string // We'll use string representation in the API
 
-open Domain
-
-type Status =
-    | Todo
-    | Doing
-    | Done
-    
-type ToDoList = {
+type ToDoListDto = {
     name: string
     description: string
     status: Status
-    percentageDone:decimal
+    percentageDone: decimal
 }
 
-type GetListResponse = {lists: ToDoList []}
-
-let fromDomain (list: Domain.ToDoList ) =
-      let mapStatus (s: Domain.Status) =
-          match s with
-          | Domain.Todo -> Todo
-          | Domain.Doing -> Doing
-          | Domain.Done -> Done
-          
-      { name= list.name
-        description= list.description
-        status= list.status|>mapStatus
-        percentageDone= list.percentageDone
+type CreateToDoListRequest = {
+    name: string
+    description: string
 }
 
-type GetListsResponse = { lists: ToDoList [] }
+type GetListsResponse = {
+    lists: ToDoListDto array
+}
+
+let fromDomain (todoList: Domain.ToDoList) : ToDoListDto =
+    { 
+        name = todoList.name
+        description = todoList.description
+        status = 
+            match todoList.status with
+            | Domain.Status.Doing -> "Doing"
+            | Domain.Status.Done -> "Done"
+            | Domain.Status.Todo -> "Todo"
+        percentageDone = todoList.percentageDone
+    }
+
+let toDomain (request: CreateToDoListRequest) : Domain.ToDoList =
+    { 
+        name = request.name
+        description = request.description
+        status = Domain.Status.Todo
+        percentageDone = 0m
+    }
